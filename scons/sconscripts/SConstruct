@@ -1,0 +1,17 @@
+env = Environment()
+
+SConsignFile('build/.sconsign.dblite')
+
+# adding tools
+env.Tool('ktool', ['tools'])
+
+# adding sub-scripts
+for part in ['part1','part2']:
+    sconscript_file = f'{part}/{part}.scons'
+    print("reading scons script for part %s: %s" % (part, sconscript_file))
+    SConscript(
+        sconscript_file,
+        exports='env',
+        variant_dir=f'build/{part}',
+        duplicate=0,
+    )
